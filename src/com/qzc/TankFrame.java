@@ -13,8 +13,10 @@ import java.awt.event.WindowEvent;
 public class TankFrame extends Frame {
 	Tank myTank=new Tank(200,200,Dir.DOWN);
 	Bullet b=new Bullet(300,300,Dir.DOWN);
+	static int GAME_WIDTH=800,GAME_HEIGHT=600;
+	Image offScreenImage = null;
 	public TankFrame(){
-		setSize(800,600);
+		setSize(GAME_WIDTH,GAME_HEIGHT);
 		setResizable(false);
 		setVisible(true);
 		setTitle("tank war");
@@ -32,11 +34,26 @@ public class TankFrame extends Frame {
 		myTank.paint(g);
 		b.paint(g);
 	}
+	@Override
+	public void update(Graphics g){
+		if (offScreenImage == null){
+			offScreenImage = this.createImage(GAME_WIDTH,GAME_HEIGHT);
+		}
+		Graphics gOffScreen = offScreenImage.getGraphics();
+		Color c = gOffScreen.getColor();
+		gOffScreen.setColor(Color.black);
+		gOffScreen.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+		gOffScreen.setColor(c);
+		paint(gOffScreen);
+		g.drawImage(offScreenImage,0,0,null);
+
+	}
 	class MyKeyListener extends KeyAdapter{
 		boolean bL = false;
 		boolean bR = false;
 		boolean bU = false;
 		boolean bD = false;
+
 		@Override
 		public void keyPressed(KeyEvent e) {
 			int keyCode = e.getKeyCode();
@@ -55,7 +72,6 @@ public class TankFrame extends Frame {
 					break;
 			}
 			setMainTankDir();
-
 		}
 
 		@Override
@@ -77,13 +93,13 @@ public class TankFrame extends Frame {
 			}
 			setMainTankDir();
 		}
+
 		private void setMainTankDir() {
 			myTank.setMoving(true);
 			if (bL) myTank.setDir(Dir.LEFT);
 			if (bD) myTank.setDir(Dir.DOWN);;
 			if (bU) myTank.setDir(Dir.UP);
 			if (bR) myTank.setDir(Dir.RIGHT);
-
 			if (!bL && !bR && !bU && !bD) myTank.setMoving(false);
 		}
 	}

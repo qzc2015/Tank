@@ -9,7 +9,7 @@ import java.awt.*;
 public class Bullet {
 	private int x,y;
 	private Dir dir;
-	private static final int SPEED=5,WIDTH = 30,HEGHT = 30;
+	private static final int SPEED=5,WIDTH = 30,HEIGHT = 30;
 
 	public Bullet(int x,int y,Dir dir){
 		this.x = x;
@@ -19,7 +19,7 @@ public class Bullet {
 	public void paint(Graphics g){
 		Color c = g.getColor();
 		g.setColor(Color.red);
-		g.fillOval(x,y,WIDTH,HEGHT);
+		g.fillOval(x,y,WIDTH,HEIGHT);
 		g.setColor(c);
 		move();
 	}
