@@ -1,6 +1,7 @@
 package com.qzc;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * @author qzc
@@ -9,18 +10,29 @@ import java.awt.*;
 public class Tank {
 	private int x,y;
 	private Dir dir=Dir.DOWN;
-	private static final int SPEED = 10;
-	private boolean moving = false;
+	private static final int SPEED = 1;
+	private boolean moving = true;
 	public static int WIDTH=ResourceMgr.tankD.getWidth();
 	public static int HEIGHT=ResourceMgr.tankD.getHeight();
 	private TankFrame tf;
 	private boolean living = true;
+	private Group group=Group.BAD;
+	Random random=new Random();
 
-	public Tank(int x, int y, Dir dir,TankFrame tf) {
+	public Tank(int x, int y, Dir dir,Group group,TankFrame tf) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.tf = tf;
+		this.group = group;
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 
 	public boolean getLiving() {
@@ -99,12 +111,13 @@ public class Tank {
 				y+=SPEED;
 				break;
 		}
+		if (random.nextInt(10)>8) this.fire();
 	}
 
 	public void fire() {
 		int bX=x+Tank.WIDTH/2-Bullet.WIDTH/2;
 		int bY=y+Tank.HEIGHT/2-Bullet.HEIGHT/2;
-		tf.bullets.add(new Bullet(bX,bY,dir,tf));
+		tf.bullets.add(new Bullet(bX,bY,dir,this.group,tf));
 	}
 
 	public void die() {
