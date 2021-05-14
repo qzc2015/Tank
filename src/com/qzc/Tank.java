@@ -9,14 +9,14 @@ import java.util.Random;
  */
 public class Tank {
 	private int x,y;
-	private Dir dir=Dir.DOWN;
+	private Dir dir;
 	private static final int SPEED = 1;
 	private boolean moving = true;
 	public static int WIDTH=ResourceMgr.tankD.getWidth();
 	public static int HEIGHT=ResourceMgr.tankD.getHeight();
 	private TankFrame tf;
 	private boolean living = true;
-	private Group group=Group.BAD;
+	private Group group;
 	Random random=new Random();
 
 	public Tank(int x, int y, Dir dir,Group group,TankFrame tf) {
