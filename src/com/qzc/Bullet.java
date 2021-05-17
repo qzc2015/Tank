@@ -9,7 +9,7 @@ import java.awt.*;
 public class Bullet {
 	private int x,y;
 	private final Dir dir;
-	private static final int SPEED=10;
+	private static final int SPEED=15;
 	public static int WIDTH = ResourceMgr.bulletD.getWidth();
 	public static int HEIGHT = ResourceMgr.bulletD.getHeight();
 	private boolean living = true;
@@ -65,8 +65,10 @@ public class Bullet {
 		Rectangle rectangle1=new Rectangle(this.x,this.y,WIDTH,HEIGHT);
 		Rectangle rectangle2=new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
 		if (rectangle1.intersects(rectangle2)){
-			die();
 			tank.die();
+			this.die();
+			tf.explodes.add(new Explode(x,y,tf));
+
 		}
 	}
 
