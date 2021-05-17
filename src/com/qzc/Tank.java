@@ -10,10 +10,10 @@ import java.util.Random;
 public class Tank {
 	private int x,y;
 	private Dir dir;
-	private static final int SPEED = 1;
+	private static final int SPEED = 10;
 	private boolean moving = true;
-	public static int WIDTH=ResourceMgr.tankD.getWidth();
-	public static int HEIGHT=ResourceMgr.tankD.getHeight();
+	public static int WIDTH=ResourceMgr.tankU.getWidth();
+	public static int HEIGHT=ResourceMgr.tankU.getHeight();
 	private TankFrame tf;
 	private boolean living = true;
 	private Group group;
