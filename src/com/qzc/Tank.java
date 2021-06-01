@@ -18,6 +18,7 @@ public class Tank {
 	private boolean living = true;
 	private Group group;
 	Random random=new Random();
+	Rectangle react=new Rectangle();
 
 	public Tank(int x, int y, Dir dir,Group group,TankFrame tf) {
 		this.x = x;
@@ -25,6 +26,11 @@ public class Tank {
 		this.dir = dir;
 		this.tf = tf;
 		this.group = group;
+
+		react.x=x;
+		react.y=y;
+		react.width=WIDTH;
+		react.height=HEIGHT;
 	}
 
 	public Group getGroup() {
@@ -111,11 +117,15 @@ public class Tank {
 				y+=SPEED;
 				break;
 		}
+
 		if (this.group == Group.BAD && random.nextInt(100)>95) this.fire();
 		if (this.group == Group.BAD && random.nextInt(100)>95)
 			randomDir();
 
 		boundsCheck();
+		//更新react中坦克的位置
+		react.x=x;
+		react.y=y;
 	}
 
 	private void boundsCheck() {

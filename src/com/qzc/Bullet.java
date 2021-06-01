@@ -15,12 +15,18 @@ public class Bullet {
 	private boolean living = true;
 	private final TankFrame tf;
 	private Group group;
+	Rectangle rect=new Rectangle();
 	public Bullet(int x,int y,Dir dir,Group group,TankFrame tf){
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.tf = tf;
 		this.group = group;
+
+		rect.x=x;
+		rect.y=y;
+		rect.width=WIDTH;
+		rect.height=HEIGHT;
 	}
 	public void paint(Graphics g){
 		if (!living) {
@@ -57,14 +63,14 @@ public class Bullet {
 				y+=SPEED;
 				break;
 		}
+		rect.x=x;
+		rect.y=y;
 		if (x<0 || y<0 || x> TankFrame.GAME_WIDTH || y> TankFrame.GAME_HEIGHT) living =false;
 	}
 
 	public void collideWith(Tank tank) {
 		if (group == tank.getGroup())return;
-		Rectangle rectangle1=new Rectangle(this.x,this.y,WIDTH,HEIGHT);
-		Rectangle rectangle2=new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
-		if (rectangle1.intersects(rectangle2)){
+		if (rect.intersects(tank.react)){
 			tank.die();
 			this.die();
 			int eX = tank.getX()+Tank.WIDTH/2-Explode.WIDTH/2;
