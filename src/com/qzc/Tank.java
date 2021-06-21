@@ -19,6 +19,7 @@ public class Tank {
 	private Group group;
 	Random random=new Random();
 	Rectangle react=new Rectangle();
+	private FireStrategy fs;
 
 	public Tank(int x, int y, Dir dir,Group group,TankFrame tf) {
 		this.x = x;
@@ -31,10 +32,33 @@ public class Tank {
 		react.y=y;
 		react.width=WIDTH;
 		react.height=HEIGHT;
+		if (group==Group.GOOD){
+			String goodFs =(String) PropertyMgr.get("goodFS");
+			try {
+				try {
+					fs=(FireStrategy) Class.forName(goodFs).newInstance();
+				} catch (InstantiationException | IllegalAccessException e) {
+					e.printStackTrace();
+				}
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}else{
+			fs=new DefaultFireStrategy();
+		}
+
 	}
 
 	public Group getGroup() {
 		return group;
+	}
+
+	public TankFrame getTf() {
+		return tf;
+	}
+
+	public void setTf(TankFrame tf) {
+		this.tf = tf;
 	}
 
 	public void setGroup(Group group) {
@@ -141,9 +165,7 @@ public class Tank {
 	}
 
 	public void fire() {
-		int bX=x+Tank.WIDTH/2-Bullet.WIDTH/2;
-		int bY=y+Tank.HEIGHT/2-Bullet.HEIGHT/2;
-		tf.bullets.add(new Bullet(bX,bY,dir,this.group,tf));
+		fs.fire(this);
 	}
 
 	public void die() {
