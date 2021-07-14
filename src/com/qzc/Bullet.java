@@ -13,14 +13,14 @@ public class Bullet {
 	public static int WIDTH = ResourceMgr.bulletD.getWidth();
 	public static int HEIGHT = ResourceMgr.bulletD.getHeight();
 	private boolean living = true;
-	private final TankFrame tf;
+	private final GameModel gm;
 	private Group group;
 	Rectangle rect=new Rectangle();
-	public Bullet(int x,int y,Dir dir,Group group,TankFrame tf){
+	public Bullet(int x,int y,Dir dir,Group group,GameModel gm){
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
-		this.tf = tf;
+		this.gm = gm;
 		this.group = group;
 
 		rect.x=x;
@@ -28,11 +28,11 @@ public class Bullet {
 		rect.width=WIDTH;
 		rect.height=HEIGHT;
 
-		tf.bullets.add(this);
+		this.gm.bullets.add(this);
 	}
 	public void paint(Graphics g){
 		if (!living) {
-			tf.bullets.remove(this);
+			gm.bullets.remove(this);
 		}
 		switch (dir){
 			case LEFT:
@@ -77,7 +77,7 @@ public class Bullet {
 			this.die();
 			int eX = tank.getX()+Tank.WIDTH/2-Explode.WIDTH/2;
 			int eY = tank.getY()+Tank.HEIGHT/2-Explode.HEIGHT/2;
-			tf.explodes.add(new Explode(x,y,tf));
+			gm.explodes.add(new Explode(x,y, gm));
 
 		}
 	}
