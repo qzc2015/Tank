@@ -7,7 +7,7 @@ import java.util.Random;
  * @author qzc
  * @create 2021-05-13 11:49
  */
-public class Tank {
+public class Tank extends GameObject{
 	private int x,y;
 	private Dir dir;
 	private static final int SPEED = 10;
@@ -106,7 +106,7 @@ public class Tank {
 	}
 
 	public void paint(Graphics g) {
-		if (!living) gm.tanks.remove(this);
+		if (!living) gm.remove(this);
 		switch (dir){
 			case LEFT:
 				g.drawImage(this.group==Group.GOOD ? ResourceMgr.goodTankL:ResourceMgr.badTankL,x,y,null);
@@ -170,5 +170,15 @@ public class Tank {
 
 	public void die() {
 		this.living = false;
+	}
+
+	public void collideWith(Tank t){
+		if (this.react.intersects(t.react)){
+			this.stop();
+			t.stop();
+		}
+	}
+	public void stop(){
+		this.moving=false;
 	}
 }
