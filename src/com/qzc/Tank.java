@@ -9,23 +9,22 @@ import java.util.Random;
  */
 public class Tank extends GameObject{
 	private int x,y;
+	int oldX,oldY;
 	private Dir dir;
 	private static final int SPEED = 10;
 	private boolean moving = true;
 	public static int WIDTH=ResourceMgr.goodTankU.getWidth();
 	public static int HEIGHT=ResourceMgr.goodTankU.getHeight();
-	private GameModel gm;
 	private boolean living = true;
 	private Group group;
 	Random random=new Random();
-	Rectangle react=new Rectangle();
+	public Rectangle react=new Rectangle();
 	private FireStrategy fs;
 
-	public Tank(int x, int y, Dir dir,Group group,GameModel gm) {
+	public Tank(int x, int y, Dir dir,Group group) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
-		this.gm = gm;
 		this.group = group;
 
 		react.x=x;
@@ -46,20 +45,14 @@ public class Tank extends GameObject{
 		}else{
 			fs=new DefaultFireStrategy();
 		}
-
+		GameModel.getInstance().add(this);
 	}
 
 	public Group getGroup() {
 		return group;
 	}
 
-	public GameModel getGm() {
-		return gm;
-	}
 
-	public void setGm(GameModel gm) {
-		this.gm = gm;
-	}
 
 	public void setGroup(Group group) {
 		this.group = group;
@@ -106,7 +99,7 @@ public class Tank extends GameObject{
 	}
 
 	public void paint(Graphics g) {
-		if (!living) gm.remove(this);
+		if (!living) GameModel.getInstance().remove(this);
 		switch (dir){
 			case LEFT:
 				g.drawImage(this.group==Group.GOOD ? ResourceMgr.goodTankL:ResourceMgr.badTankL,x,y,null);
@@ -126,6 +119,8 @@ public class Tank extends GameObject{
 	}
 
 	private void move() {
+		oldX=x;
+		oldY=y;
 		if (!moving) return;
 		switch (dir){
 			case LEFT:
@@ -172,13 +167,12 @@ public class Tank extends GameObject{
 		this.living = false;
 	}
 
-	public void collideWith(Tank t){
-		if (this.react.intersects(t.react)){
-			this.stop();
-			t.stop();
-		}
-	}
 	public void stop(){
 		this.moving=false;
+	}
+
+	public void back(){
+		x=oldX;
+		y=oldY;
 	}
 }

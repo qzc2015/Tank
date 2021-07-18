@@ -12,16 +12,31 @@ import java.util.Objects;
  * @create 2021-07-14 17:30
  */
 public class GameModel {
-	Tank myTank=new Tank(200,400,Dir.DOWN,Group.GOOD,this);
+	private static GameModel INSTANCE=new GameModel();
+	static {
+		INSTANCE.init();
+	}
+	Tank myTank;
 
 	List<GameObject> gos=new ArrayList<>();
 
 	ColliderChain collide=new ColliderChain();
-	public GameModel(){
+	private GameModel(){
+
+	}
+	private void init(){
+		myTank=new Tank(200,400,Dir.DOWN,Group.GOOD);
 		int initTankCount=Integer.parseInt((String) Objects.requireNonNull(PropertyMgr.get("initTankCount")));
 		for (int i = 0; i < initTankCount; i++) {
-			add(new Tank(200+i*60,200,Dir.DOWN,Group.BAD,this));
+			new Tank(200+i*60,200,Dir.DOWN,Group.BAD);
 		}
+		add(new Wall(150,150,200,50));
+		add(new Wall(550,150,200,50));
+		add(new Wall(300,300,50,200));
+		add(new Wall(550,300,50,200));
+	}
+	public static GameModel getInstance(){
+		return INSTANCE;
 	}
 	public void add(GameObject go){
 		gos.add(go);

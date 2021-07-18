@@ -11,7 +11,7 @@ public class FourFireStrategy implements FireStrategy{
 		for (Dir dir : dirs) {
 			int bX=tank.getX()+Tank.WIDTH/2-Bullet.WIDTH/2;
 			int bY=tank.getY()+Tank.HEIGHT/2-Bullet.HEIGHT/2;
-			new Bullet(bX,bY,dir,tank.getGroup(),tank.getGm());
+			new Bullet(bX,bY,dir,tank.getGroup());
 		}
 	}
 }

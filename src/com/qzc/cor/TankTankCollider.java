@@ -13,7 +13,10 @@ public class TankTankCollider implements Collider{
 		if (o1 instanceof Tank && o2 instanceof Tank){
 			Tank t1=(Tank)o1;
 			Tank t2=(Tank)o2;
-			t1.collideWith(t2);
+			if (t1.react.intersects(t2.react)){
+				t1.back();
+				t2.back();
+			}
 		}
 		return true;
 	}
