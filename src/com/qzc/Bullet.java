@@ -7,7 +7,6 @@ import java.awt.*;
  * @create 2021-05-13 14:12
  */
 public class Bullet extends GameObject{
-	private int x,y;
 	private final Dir dir;
 	private static final int SPEED=25;
 	public static int WIDTH = ResourceMgr.bulletD.getWidth();
@@ -25,7 +24,7 @@ public class Bullet extends GameObject{
 		rect.y=y;
 		rect.width=WIDTH;
 		rect.height=HEIGHT;
-		GameModel.getInstance().add(this);
+		//GameModel.getInstance().add(this);
 	}
 	public void paint(Graphics g){
 		if (!living) {
@@ -47,6 +46,17 @@ public class Bullet extends GameObject{
 		}
 		move();
 	}
+
+	@Override
+	public int getWidth() {
+		return WIDTH;
+	}
+
+	@Override
+	public int getHeight() {
+		return HEIGHT;
+	}
+
 	public void move(){
 		switch (dir){
 			case LEFT:

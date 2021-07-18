@@ -7,7 +7,6 @@ import java.awt.*;
  * @create 2021-05-13 11:49
  */
 public class Explode extends GameObject{
-	private int x,y;
 	public static int WIDTH=ResourceMgr.explodes[0].getWidth();
 	public static int HEIGHT=ResourceMgr.explodes[0].getHeight();
 	private boolean living = true;
@@ -50,5 +49,13 @@ public class Explode extends GameObject{
 	public void setY(int y) {
 		this.y = y;
 	}
+	@Override
+	public int getWidth() {
+		return WIDTH;
+	}
 
+	@Override
+	public int getHeight() {
+		return HEIGHT;
+	}
 }
