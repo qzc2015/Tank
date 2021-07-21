@@ -1,9 +1,14 @@
 package com.qzc;
 
+import com.qzc.observer.TankFireEvent;
+import com.qzc.observer.TankFireHandler;
+import com.qzc.observer.TankFireObserver;
 import com.qzc.strategy.DefaultFireStrategy;
 import com.qzc.strategy.FireStrategy;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -185,5 +190,12 @@ public class Tank extends GameObject{
 	@Override
 	public int getHeight() {
 		return HEIGHT;
+	}
+	private List<TankFireObserver> fireObservers=Arrays.asList(new TankFireHandler());
+	public void handleFireKey(){
+		TankFireEvent event=new TankFireEvent(this);
+		for (TankFireObserver fireObserver : fireObservers) {
+			fireObserver.actionOnFire(event);
+		}
 	}
 }
