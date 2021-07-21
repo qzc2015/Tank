@@ -1,5 +1,8 @@
 package com.qzc;
 
+import com.qzc.strategy.DefaultFireStrategy;
+import com.qzc.strategy.FireStrategy;
+
 import java.awt.*;
 import java.util.Random;
 

@@ -1,4 +1,6 @@
-package com.qzc;
+package com.qzc.strategy;
+
+import com.qzc.Tank;
 
 /**
  * @author qzc

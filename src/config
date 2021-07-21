@@ -1,4 +1,4 @@
 #tanks count at initialization
 initTankCount=10
-goodFS=com.qzc.FourFireStrategy
-badFS=com.qzc.DefaultFireStrategy
+goodFS=com.qzc.strategy.FourFireStrategy
+badFS=com.qzc.strategy.DefaultFireStrategy
