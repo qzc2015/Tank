@@ -3,6 +3,7 @@ package com.qzc;
 import com.qzc.cor.ColliderChain;
 
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -69,5 +70,46 @@ public class GameModel {
 
 	public Tank getMainTank() {
 		return myTank;
+	}
+
+	public void save(){
+		File file=new File("D:/tank.data");
+		ObjectOutputStream oos = null;
+		try {
+			oos=new ObjectOutputStream(new FileOutputStream(file));
+			oos.writeObject(myTank);
+			oos.writeObject(gos);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (oos!=null){
+				try {
+					oos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public void load(){
+		File file=new File("D:/tank.data");
+		ObjectInputStream ois = null;
+		try {
+			ois=new ObjectInputStream(new FileInputStream(file));
+			myTank=(Tank) ois.readObject();
+			gos=(List) ois.readObject();
+
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if (ois!=null){
+				try {
+					ois.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }
